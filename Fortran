@@ -1,0 +1,52 @@
+//A program to select options and calculate by giving an input
+
+PROGRAM TSimple
+   implicit none
+   INTEGER m
+   REAL num
+   REAL ans
+   print *, "Enter the conversion option"
+   print *, "(1) Pounds to Kilograms"
+   print *, "(2) Kilograms to Pounds"
+   print *, "(3) Feet to meters"
+   print *, "(4) Meters to feet"
+   print *, "(5) Fahrenhe it to Celsius"
+   print *, "(6) Celsius to Fahrenheit"
+   print *, "(0) Exit this program"
+   READ  *, m
+   
+   SELECT CASE (m)
+   CASE (1)
+   print *, 'Enter the pounds to convert to kilograms'
+   CASE (2)
+   print *, 'Enter the kilograms to convert to pounds'
+   CASE(3)
+   print *, 'Enter the feet to convert to meters'
+   CASE(4)
+   print *, 'Enter the meteres to convert to feet'
+   CASE(5)
+   print *, 'Enter the Fahrenheit to convert to celsius'
+   CASE(6)
+   print *, 'Enter the celsius to convert to fahrenheit'
+   CASE(0)
+   call Exit
+   END SELECT
+   
+   READ *, num
+ 
+   SELECT CASE (m)
+   CASE (1)
+   write (*,*) " The given pounds in kg is ", num * 0.453592 ," kgs"
+   CASE (2)
+   write (*,*) " The given kg in pounds is ", num * 2.20462 ," pounds"
+   CASE(3)
+   write (*,*) " The given feet in metres is ", num * 0.3048 ," metres"
+   CASE(4)
+   write (*,*) " The given metres in feet is ", num * 3.28084 ," feets"
+   CASE(5)
+   write (*,*) " The given fahrenheit in celsius is ", (num * (9/5) +32) ," celsius"
+   CASE(6)
+   write (*,*) " The given celsius in fahrenheit is ", (num - 32)/(5/9) ," fahrenheit"
+   END SELECT
+     
+END 
