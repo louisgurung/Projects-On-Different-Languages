@@ -1,0 +1,228 @@
+//A quiz program that calculates the score and stores in database
+//Program.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .box {
+        border-style: solid;
+        border-width: 1px;
+        height: auto;
+        width: 55%;
+        margin-left: 20%;
+      }
+      p {
+        text-align: center;
+      }
+      .align-questions {
+        padding-left: 10%;
+      }
+      .space-between-questions {
+        margin-bottom: 10px;
+      }
+    </style>
+    <title>Program.html</title>
+  </head>
+  <body>
+    <h1 style="text-align:center;margin-right:7%">P4.html</h1>
+    <div class="box">
+      <h1 style="text-align:center;margin-right:7%">
+        <b><i>CMPS401 PHP QUIZ</i></b>
+      </h1>
+      <form method="POST" action="./P4.php">
+        <p>
+          First Name:
+          <input type="text" name="firstName" id="firstName"/>
+          Last Name:
+          <input type="text" name="lastName" id="lastName"/>
+        </p>
+        <hr width="80%" size="5" />
+        <div class="align-questions">
+          <div class="space-between-questions">
+            1. What does PHP stand for?<br />
+            <input type="radio" name="que1" value="a" />a)PHP:Hypertext
+            Preprocessor<br />
+            <input type="radio" name="que1" value="b" /> b) Personal Hypertext
+            Processor<br />
+            <input type="radio" name="que1" value="c" /> c) Private Home Page<br />
+            <input type="radio" name="que1" value="d" /> d) Personal Home
+            Page<br />
+          </div>
+          <div class="space-between-questions">
+            2. How do you write "Hello World" in PHP?<br />
+            <input type="radio" name="que2" value="a" />a) "Hello World";<br />
+            <input type="radio" name="que2" value="b" />b) Document.Write("Hello
+            World");<br />
+            <input type="radio" name="que2" value="c" />c) echo "Hello
+            World";<br />
+          </div>
+          <div class="space-between-questions">
+            3. All variables in PHP start with which symbol?<br />
+            <input type="radio" name="que3" value="a" />a) $<br />
+            <input type="radio" name="que3" value="b" /> b) @<br />
+            <input type="radio" name="que3" value="c" /> c) %<br />
+            <input type="radio" name="que3" value="d" /> d) &<br />
+          </div>
+          <div class="space-between-questions">
+            4. What is the correct way to add 1 to the $count variable?<br />
+            <input type="radio" name="que4" value="a" />a)$count++;<br />
+            <input type="radio" name="que4" value="b" /> b)$count =+1<br />
+            <input type="radio" name="que4" value="c" /> c) ++count<br />
+            <input type="radio" name="que4" value="d" /> d) count++;<br />
+          </div>
+          <div class="space-between-questions">
+            5. How do you get information from a form that is submitted using
+            the "post" method?<br />
+            <input type="radio" name="que5" value="a" />a) Request.Form;<br />
+            <input type="radio" name="que5" value="b" />b) $_GET[ ];<br />
+            <input type="radio" name="que5" value="c" />c) $_POST[ ];<br />
+            <input type="radio" name="que5" value="d" />d)
+            Request.QueryString;<br />
+          </div>
+          <div class="space-between-questions">
+            6. when using the post method, variables are displayed in the
+            url:<br />
+            <input type="radio" name="que6" value="a" />a)true<br />
+            <input type="radio" name="que6" value="b" /> b) false<br />
+          </div>
+          <div class="space-between-questions">
+            7. in php you can use both single quotes (' ') and double quotes ("
+            ") for strings:<br />
+            <input type="radio" name="que7" value="a" />a)true<br />
+            <input type="radio" name="que7" value="b" /> b)false<br />
+          </div>
+          <div class="space-between-questions">
+            8. what is the correct way to create a function in php?<br />
+            <input type="radio" name="que8" value="a" />a) create
+            myfunction()<br />
+            <input type="radio" name="que8" value="b" /> b) new_function
+            myfunction()<br />
+            <input type="radio" name="que8" value="c" /> c) function
+            myfunction()<br />
+          </div>
+          <div class="space-between-questions">
+            9. what is the correct way to connect to a mysql database?<br />
+            <input type="radio" name="que9" value="a" />a)
+            mysql_connect("localhost");<br />
+            <input type="radio" name="que9" value="b" />b)
+            mysql_query("localhost");<br />
+            <input type="radio" name="que9" value="c" />c)
+            connect_mysql("localhost");<br />
+            <input type="radio" name="que9" value="d" />d)
+            mysql_open("localhost");<br />
+          </div>
+          <div class="space-between-questions">
+            10.the following html code will direct form information and control
+            to what file?<br />
+            &lt;form action="P4.php" method="post"&gt;<br />
+            <input type="text" name="que10"/>(note:
+            case-sensitive)
+          </div>
+        </div>
+        <hr width="100%" size="5" />
+        <div style="text-align:center" class="submit-button">
+          <input type="submit" name="submit" style="margin-bottom:5px;" />
+        </div>
+      </form>
+    </div>
+    <p style="text-align:center">
+      Answer: 1. a; 2. c; 3. a; 4. a; 5. c; 6. b; 7. a; 8. c; 9. a; 10.&#34;P4.php&#34;
+    </p>
+  </body>
+</html>
+
+//Program.php
+<?php
+		if(isset($_POST['submit'])){
+			 $firstname =$_POST['firstName'];
+			 $lastname = $_POST['lastName'];
+			 $score = getScore();
+			
+			
+			 $connection = ""; //declaring empty connection , to make it globally accessible
+		
+			if(!empty($firstname) && !empty($lastname)){
+					
+					//if the name is not empty, we try to make the connection
+				$connection = mysqli_connect("localhost","cmps401","Mycmpsdb","cmps401");
+				
+				if($connection->connect_error){
+					die("connect error (".mysqli_connect_errno().") ".mysqli_connect_error());
+					echo "connection to database failed";
+				}
+				// else{
+					// echo "Database connection successful";
+				// }	
+								 
+			}
+			else{
+				 echo "Firstname or Lastname cannot be empty.";
+			 }
+		
+			//DATE
+			$date = date("m/d/Y h:i A");
+			
+		
+			
+			//update is not working
+			if (hasPerson($connection, $firstname,$lastname)){
+				$query = "UPDATE `g104` SET `Score` = '$score', `Date`='$date' WHERE `FirstName` = '$firstname' AND `LastName` = '$lastname'";
+				mysqli_query($connection, $query);
+			}
+			else{
+				$query = "INSERT INTO `g104` (`FirstName`,`LastName`,`Score`,`Date`) VALUES('$firstname','$lastname',$score,'$date')";
+				mysqli_query($connection,$query);
+			}
+			
+			mysqli_close($connection);
+			
+		}
+					
+		function getScore(){
+				
+			$score = 0;
+			
+			if($_POST["que1"] == "a")
+				$score++;
+			if($_POST["que2"]=="c")
+				$score++;
+			if($_POST["que3"]=="a")
+				$score++;
+			if($_POST["que4"]=="a")
+				$score++;
+			if($_POST["que5"]=="c")
+				$score++;
+			if($_POST["que6"]=="b")
+				$score++;
+			if($_POST["que7"]=="a")
+				$score++;
+			if($_POST["que8"]=="c")
+				$score++;
+			if($_POST["que9"]=="a")
+				$score++;
+			if($_POST["que10"]=="P4.php")
+				$score++;
+						
+			return $score;
+			
+		}
+		
+		function hasPerson($connection, $firstname, $lastname){
+			$query = "SELECT * FROM g104";
+			$store = mysqli_query($connection, $query);
+			
+			for ($i = 0; $row = mysqli_fetch_assoc($store);$i++){
+				if($row["FirstName"]==$firstname && $row["LastName"]==$lastname)
+					return true;
+			}
+			return false;
+		}
+		
+		echo "NAME: ".$firstname." ".$lastname."<br>";
+		
+		echo "TIME: ".$date."<br>";
+		
+		echo "Score: ".$score;
+		
+	
+?>
